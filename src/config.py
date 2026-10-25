@@ -54,12 +54,26 @@ CV_FOLDS = 5
 # Es sensible al rendimiento sobre la clase minoritaria, a diferencia de accuracy.
 PRIMARY_METRIC = "average_precision"
 
-# Criterio de umbral: F-beta con beta=2 (el recall pesa el doble que la precisión),
-# porque no detectar a un cliente que se va suele costar más que contactar a uno que se queda.
-THRESHOLD_BETA = 2.0
+# Criterio de umbral: maximizar F1 sobre predicciones out-of-fold (validación).
+# Se evaluó F2 (más peso al recall), pero su óptimo es muy plano y marcaba ~50% de la cartera
+# como riesgo: poco realista para una campaña. El umbral F2 se guarda como referencia.
+THRESHOLD_BETA = 1.0
+ALT_THRESHOLD_BETA = 2.0
 
-# --- Niveles de riesgo (bandas de probabilidad, límite inferior inclusivo) ---
-RISK_BANDS = [(0.0, "Low"), (0.30, "Medium"), (0.60, "High")]
+# --- Niveles de riesgo ---
+# Low = por debajo del umbral (no se marca); Medium = marcado con p < HIGH_RISK_PROBA; High = resto.
+HIGH_RISK_PROBA = 0.60
 
 # Número de factores SHAP que se muestran por cliente en el CSV de predicciones.
 TOP_N_DRIVERS = 3
+# Contribuciones menores que esto (en log-odds) se consideran despreciables y no se listan.
+MIN_DRIVER_CONTRIBUTION = 0.01
+
+# --- Supuestos económicos HIPOTÉTICOS (solo para ilustrar el impacto; no son datos reales) ---
+ECONOMIC_ASSUMPTIONS = {
+    "cost_per_targeted_customer": 30.0,  # contacto + incentivo de retención, por cliente contactado
+    "retention_success_rate": 0.25,  # % de churners reales contactados que deciden quedarse
+    "gross_margin": 0.50,  # margen bruto sobre la cuota mensual
+    "retained_months": 12,  # meses de ingresos que se conservan si el cliente se queda
+}
+SENSITIVITY_SUCCESS_RATES = [0.10, 0.25, 0.40]
