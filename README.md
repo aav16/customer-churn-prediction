@@ -1,5 +1,12 @@
 # Customer Churn Prediction — Machine Learning & Explainable AI
 
+[![tests](https://github.com/aav16/customer-churn-prediction/actions/workflows/tests.yml/badge.svg)](https://github.com/aav16/customer-churn-prediction/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/python-3.12-blue)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.9-orange)
+![XGBoost](https://img.shields.io/badge/XGBoost-3.4-green)
+![SHAP](https://img.shields.io/badge/SHAP-0.54-purple)
+[![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
+
 End-to-end, reproducible machine-learning project that predicts which telecom customers are likely to
 churn and uses **SHAP** to explain *why* each prediction was made.
 
@@ -53,13 +60,17 @@ data): **7,043 customers × 21 columns**, one row per customer.
 | Services | `PhoneService`, `MultipleLines`, `InternetService`, `OnlineSecurity`, `OnlineBackup`, `DeviceProtection`, `TechSupport`, `StreamingTV`, `StreamingMovies` |
 | Target | `Churn` (Yes/No) — **26.5% Yes** |
 
-The CSV is not committed (see [`data/README.md`](data/README.md)); place it at
-`data/WA_Fn-UseC_-Telco-Customer-Churn.csv`.
+**Source and attribution:** this is a **public dataset available on Kaggle**
+([blastchar/telco-customer-churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)),
+originally published by IBM as sample data for customer-retention analysis. All credit for the data goes
+to its original publishers. The CSV is **not redistributed** in this repository: download it from Kaggle
+and place it at `data/WA_Fn-UseC_-Telco-Customer-Churn.csv` (see [`data/README.md`](data/README.md)).
 
 ## 4. Project Structure
 
 ```text
 customer-churn-prediction/
+├── .github/workflows/tests.yml   # CI: runs the pytest suite on every push
 ├── data/                         # raw CSV (git-ignored) + download instructions
 ├── notebooks/
 │   └── 01_exploratory_analysis.ipynb
@@ -84,6 +95,7 @@ customer-churn-prediction/
 │   └── business_insights.md
 ├── main.py                       # runs the whole pipeline
 ├── requirements.txt
+├── LICENSE
 └── README.md
 ```
 
@@ -101,6 +113,10 @@ Everything runs on CPU; no cloud services.
 Windows 11 + PowerShell (from the project folder):
 
 ```powershell
+# 0. Clone the repository
+git clone https://github.com/aav16/customer-churn-prediction.git
+cd customer-churn-prediction
+
 # 1. Create and activate the virtual environment
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -110,7 +126,7 @@ py -3.12 -m venv .venv
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 
-# 3. Put the dataset in data/  (see data/README.md)
+# 3. Download the dataset from Kaggle into data/  (see data/README.md)
 ```
 
 In VS Code, the workspace settings (`.vscode/settings.json`) point to `.venv\Scripts\python.exe`
@@ -286,3 +302,18 @@ are not live predictions on current customers.
 - Probability calibration monitoring, data-drift detection and scheduled retraining.
 - Additional models (LightGBM, CatBoost) and SMOTENC for mixed data types.
 - Serving the model through a small API or dashboard, and CI running the test suite.
+
+## Dataset Acknowledgement
+
+Telco Customer Churn — IBM sample data, distributed publicly on Kaggle by BlastChar:
+<https://www.kaggle.com/datasets/blastchar/telco-customer-churn>. The dataset is used here for
+educational and portfolio purposes and is not included in this repository.
+
+## License
+
+The source code and documentation are released under the [MIT License](LICENSE).
+The license does not apply to the dataset, which remains subject to its original terms.
+
+## Author
+
+**Antonio Alvarez** — [GitHub @aav16](https://github.com/aav16)
