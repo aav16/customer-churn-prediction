@@ -222,7 +222,8 @@ def plot_threshold_analysis(oof: pd.DataFrame, model_key: str, model_name: str,
     """Precision/recall/F1 vs umbral sobre predicciones OOF (validación, no test)."""
     y, p = oof["y_true"].to_numpy(), oof[f"proba_{model_key}"].to_numpy()
     ts = np.round(np.arange(0.05, 0.951, 0.01), 2)
-    prec = [precision_score(y, p >= t, zero_division=0) for t in ts]
+    # Con muy pocos clientes marcados la precisión es ruido: no se dibuja (<20 marcados).
+    prec = [precision_score(y, p >= t) if (p >= t).sum() >= 20 else np.nan for t in ts]
     rec = [recall_score(y, p >= t) for t in ts]
     f1 = [f1_score(y, p >= t) for t in ts]
     flagged = [(p >= t).mean() for t in ts]
@@ -235,7 +236,8 @@ def plot_threshold_analysis(oof: pd.DataFrame, model_key: str, model_name: str,
     ax.axvline(threshold, color="#0b0b0b", linewidth=1.2)
     ax.text(threshold + 0.01, 0.03, f"selected (max F1) = {threshold:.2f}", fontsize=9)
     ax.axvline(alt_threshold, color=GRAY, linewidth=1, linestyle="--")
-    ax.text(alt_threshold + 0.01, 0.95, f"max F2 = {alt_threshold:.2f}", fontsize=9, color=TEXT_SECONDARY)
+    ax.text(alt_threshold - 0.01, 0.95, f"max F2 = {alt_threshold:.2f}", fontsize=9, ha="right",
+            color=TEXT_SECONDARY)
     ax.set(xlabel="Classification threshold", ylabel="Score", ylim=(0, 1.02),
            title=f"{model_name} — threshold selection on out-of-fold validation predictions")
     ax.legend(loc="center right")
