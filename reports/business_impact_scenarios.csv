@@ -1,0 +1,16 @@
+strategy,retention_success_rate,customers_targeted,churners_reached,expected_customers_retained,expected_value_saved,campaign_cost,expected_net_value
+"Model, selected threshold (0.33)",0.1,503,280,28.0,12670.380000000001,15090.0,-2419.619999999999
+"Model, recall-oriented F2 threshold (0.19)",0.1,680,321,32.1,14364.39,20400.0,-6035.610000000001
+"Model, default threshold (0.50)",0.1,297,200,20.0,9236.64,8910.0,326.6399999999994
+Random targeting (same volume as selected),0.1,503,124,12.4,5248.71,15090.0,-9841.29
+Target all customers,0.1,1409,374,37.4,16328.940000000002,42270.0,-25941.059999999998
+"Model, selected threshold (0.33)",0.25,503,280,70.0,31675.95,15090.0,16585.95
+"Model, recall-oriented F2 threshold (0.19)",0.25,680,321,80.25,35910.975000000006,20400.0,15510.975000000006
+"Model, default threshold (0.50)",0.25,297,200,50.0,23091.6,8910.0,14181.599999999999
+Random targeting (same volume as selected),0.25,503,124,31.0,13121.775,15090.0,-1968.2250000000004
+Target all customers,0.25,1409,374,93.5,40822.350000000006,42270.0,-1447.6499999999942
+"Model, selected threshold (0.33)",0.4,503,280,112.0,50681.520000000004,15090.0,35591.520000000004
+"Model, recall-oriented F2 threshold (0.19)",0.4,680,321,128.4,57457.56,20400.0,37057.56
+"Model, default threshold (0.50)",0.4,297,200,80.0,36946.56,8910.0,28036.559999999998
+Random targeting (same volume as selected),0.4,503,124,49.6,20994.84,15090.0,5904.84
+Target all customers,0.4,1409,374,149.6,65315.76000000001,42270.0,23045.76000000001
